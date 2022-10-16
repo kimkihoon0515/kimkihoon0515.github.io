@@ -1,5 +1,4 @@
 # example navigation
-'''
 foo:
   - title: "Parent Link 1"
     url: /parent-1-page-url/
@@ -17,22 +16,21 @@ foo:
         url: /child-2-page-url/
       - title: "Child Link 3"
         url: /child-3-page-url/
-'''
 
 # main links
 main:
+  - auto_categories: true
   - title: "Categories"
     url: /categories/
   - title: "Tags"
     url: /tags/
-#  - title: "About"
-#    url: /about/
+  - title: "About"
+    url: /about/
   - title: "연도별 포스트"
     url: /posts/
 
 
 # documentation links
-'''
 docs:
   - title: Getting Started
     children:
@@ -131,4 +129,3 @@ sidebar-sample:
         url: /
       - title: "Child Page D2"
         url: /
-'''

@@ -273,7 +273,7 @@ compress_html:
 defaults:
   # _posts
   - scope:
-      path: ""
+      path: "category"
       type: posts
     values:
       layout: single
@@ -291,3 +291,4 @@ defaults:
     values:
       layout: single
       author_profile: true
+  
