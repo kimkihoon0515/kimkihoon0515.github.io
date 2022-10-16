@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-16T13:33:12+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">Fastapi</title><link href="http://localhost:4000/fastapi/" rel="alternate" type="text/html" title="Fastapi" /><published>2022-10-16T00:00:00+09:00</published><updated>2022-10-16T00:00:00+09:00</updated><id>http://localhost:4000/fastapi</id><content type="html" xml:base="http://localhost:4000/fastapi/"><![CDATA[<h1 id="fastapi">FastAPI</h1>
+I"e6<h1 id="fastapi">FastAPI</h1>
 
 <p>FastAPI는 Starlette라는 비동기 프레임워크를 기반으로 만들어졌고, 비동기 처리로 uvloop라는 Cython으로 만들어진 libuv 라이브러리를 사용한다.</p>
 
@@ -269,4 +269,5 @@
 
     <p>uvloop와 httptools 라는 것들을 사용하여 ASGI를 구현한 서버이다.</p>
   </li>
-</ul>]]></content><author><name>김기훈</name><email>tega1996@naver.com</email></author><summary type="html"><![CDATA[FastAPI]]></summary></entry></feed>
+</ul>
+:ET
