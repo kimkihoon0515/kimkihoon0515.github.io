@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-16T22:34:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">Docker</title><link href="http://localhost:4000/tech/docker/" rel="alternate" type="text/html" title="Docker" /><published>2022-10-16T00:00:00+09:00</published><updated>2022-10-16T00:00:00+09:00</updated><id>http://localhost:4000/tech/docker</id><content type="html" xml:base="http://localhost:4000/tech/docker/"><![CDATA[<h1 id="docker">Docker</h1>
+I"*9<hr />
+<p>title: Docker
+categories: Tech
+toc: true
+toc_sticky: true
+toc_label: ‘Docker 내용 정리’
+—</p>
+
+<h1 id="docker">Docker</h1>
 
 <h1 id="도커-docker">도커 (Docker)</h1>
 
@@ -270,4 +278,5 @@ console.log(`Running on http://${HOST}:${PORT}`);
 docer run kimkihoon0515/node-app
 </code></pre></div></div>
 
-<p>로컬에 설치된 이미지를 제거하고 도커 허브에 등록된 이미지를 run 하는 코드이다.</p>]]></content><author><name>김기훈</name><email>tega1996@naver.com</email></author><category term="Tech" /><summary type="html"><![CDATA[Docker]]></summary></entry></feed>
+<p>로컬에 설치된 이미지를 제거하고 도커 허브에 등록된 이미지를 run 하는 코드이다.</p>
+:ET
