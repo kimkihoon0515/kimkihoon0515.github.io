@@ -196,7 +196,7 @@ spec:
 		defaultRequest:
 			cpu: 0.5
 		type: Container
-```
+```  
 또한 namespace는 다음과 같은 명령어를 통해 생성이 가능하다.
 ```
 kubectl apply -f test-namespace.yaml # 혹은
