@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-19T21:53:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">Kubernetes - GPU</title><link href="http://localhost:4000/tech/kubernetes-gpu/" rel="alternate" type="text/html" title="Kubernetes - GPU" /><published>2022-10-19T00:00:00+09:00</published><updated>2022-10-19T00:00:00+09:00</updated><id>http://localhost:4000/tech/kubernetes-gpu</id><content type="html" xml:base="http://localhost:4000/tech/kubernetes-gpu/"><![CDATA[<h1 id="kubernetes---gpu">Kubernetes - GPU</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-21T18:26:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">Kubernetes - GPU</title><link href="http://localhost:4000/tech/kubernetes-gpu/" rel="alternate" type="text/html" title="Kubernetes - GPU" /><published>2022-10-19T00:00:00+09:00</published><updated>2022-10-19T00:00:00+09:00</updated><id>http://localhost:4000/tech/kubernetes-gpu</id><content type="html" xml:base="http://localhost:4000/tech/kubernetes-gpu/"><![CDATA[<h1 id="kubernetes---gpu">Kubernetes - GPU</h1>
 
 <p><img src="https://user-images.githubusercontent.com/63439911/196692537-322e934e-4d39-4466-9fd6-27f3b73dd105.png" alt="image" /></p>
 
@@ -428,7 +428,28 @@ pod란 k8s의 기본적인 배포단위이며, 컨테이너를 포함한 단위�
 
 <h2 id="pod---replicaset">pod - replicaset</h2>
 <p><img src="https://user-images.githubusercontent.com/63439911/196421191-3bd38cda-0cb2-42c9-910d-86555a5b3bc5.png" alt="image" /><img src="https://user-images.githubusercontent.com/63439911/196421216-c651d847-b2d6-4334-9324-9ecbed49da5b.png" alt="image" />
-web container 2개 복제해서 띄어놓겠다고 정의하여 pod를 생성하게 되면 2개의 호스트에 container가 생성되어 서비스를 한다.</p>]]></content><author><name>김기훈</name><email>tega1996@naver.com</email></author><category term="Tech" /><summary type="html"><![CDATA[Kubernetes]]></summary></entry><entry><title type="html">Docker</title><link href="http://localhost:4000/tech/docker/" rel="alternate" type="text/html" title="Docker" /><published>2022-10-16T00:00:00+09:00</published><updated>2022-10-16T00:00:00+09:00</updated><id>http://localhost:4000/tech/docker</id><content type="html" xml:base="http://localhost:4000/tech/docker/"><![CDATA[<h1 id="docker">Docker</h1>
+web container 2개 복제해서 띄어놓겠다고 정의하여 pod를 생성하게 되면 2개의 호스트에 container가 생성되어 서비스를 한다.</p>
+
+<h2 id="랜처">랜처</h2>
+<p>대규모 클러스터 및 기업용 환경에도 적합한 쿠버네티스 관리 플랫폼이다. 오픈소스이다.</p>
+
+<p>랜처의 가장 큰 장점으로는 쿠버네티스 클러스터뿐 아니라 운영에 필요한 모니터링, 보안 관련 기능을 쉽게 설치할 수 있다는 점이다. 랜처의 관리 도구를 사용해서 새로운 쿠버네티스 클러스터를 쉽게 생성하고 여러 클러스터를 한 곳에서 관리할 수 있다.
+<img width="702" alt="image" src="https://user-images.githubusercontent.com/63439911/197162299-2cfa3078-7312-4d59-9daa-67cea8d88c6c.png" />
+랜처는 대규모 시스템 관리까지 염두에 둔 플랫폼이므로 자체적인 구성 요소가 많이 포함되어 있으며 이로 인해 다른 도구에 비해 더 무거운 단점이 있다.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>랜처의 특징</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>용도 : 대규모 기업용 환경에도 활용 가능한 다목적 쿠버네티스 관리 플랫폼</li>
+  <li>장점 : 기능이 많고 추가 도구 설치 용이, 멀티 클라우드 관리 가능</li>
+  <li>단점 : 다른 도구에 비해 무겁다.</li>
+</ul>]]></content><author><name>김기훈</name><email>tega1996@naver.com</email></author><category term="Tech" /><summary type="html"><![CDATA[Kubernetes]]></summary></entry><entry><title type="html">Docker</title><link href="http://localhost:4000/tech/docker/" rel="alternate" type="text/html" title="Docker" /><published>2022-10-16T00:00:00+09:00</published><updated>2022-10-16T00:00:00+09:00</updated><id>http://localhost:4000/tech/docker</id><content type="html" xml:base="http://localhost:4000/tech/docker/"><![CDATA[<h1 id="docker">Docker</h1>
 
 <h1 id="도커-docker">도커 (Docker)</h1>
 
