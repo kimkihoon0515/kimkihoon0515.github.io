@@ -1,6 +1,6 @@
 ---
 title: Kubernetes - GPU
-categories: Tech
+categories: DevOps
 toc: true
 toc_sticky: true
 toc_label: k8s GPU 정리

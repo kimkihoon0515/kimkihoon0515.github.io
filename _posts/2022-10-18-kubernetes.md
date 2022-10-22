@@ -1,6 +1,6 @@
 ---
 title: Kubernetes - 컴포넌트
-categories: Tech
+categories: DevOps
 toc: true
 toc_sticky: true
 toc_label: k8s 컴포넌트 정리

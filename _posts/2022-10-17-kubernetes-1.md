@@ -1,6 +1,6 @@
 ---
 title: Kubernetes - 쿠버네티스의 특징
-categories: Tech
+categories: DevOps
 toc: true
 toc_sticky: true
 toc_label: k8s 특징 정리
