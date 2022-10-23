@@ -1,5 +1,5 @@
 ---
-title: Kubernetes - 기본 명령어
+title: Kubernetes - 기본명령어
 categories: DevOps
 toc: true
 toc_sticky: true

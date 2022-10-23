@@ -1,5 +1,5 @@
 ---
-title: Kubernetes - 컴포넌트
+title: Kubernetes - 구성요소
 categories: DevOps
 toc: true
 toc_sticky: true
