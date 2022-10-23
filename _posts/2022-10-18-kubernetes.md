@@ -182,6 +182,93 @@ spec: # pod의 구체적인 사양을 정의하는 부분
 		image: busybox # docker registry를 구체적으로 명시하여 가져올 수 있다.
 		command: ['sh','-c','echo Hello Kubernetes! && sleep 3600']
 ```
+## Deployment란?
+
+ReplicaSet을 이용하여 pod를 업데이트하고 이력을 관리하여 롤백하거나 특정 버전으로 돌아갈 수 있다.
+
+Deployment는 새로운 이미지로 업데이트하기 위해 ReplicaSet을 이용한다. 
+
+```bash
+apiVersion: apps/v1
+kind: Deployment # deployment
+metadata:
+  name: echo-deploy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: echo
+      tier: app
+  template:
+    metadata:
+      labels:
+        app: echo
+        tier: app
+    spec:
+      containers:
+        - name: echo
+          image: ghcr.io/subicura/echo:v1
+```
+
+버전을 업데이트하면 새로운 ReplicaSet을 생성하고 해당 ReplicaSet이 새로운 버전의 pod를 생성한다.
+
+과정을 그림으로 다음과 같이 나타낼 수 있다.
+![image](https://user-images.githubusercontent.com/63439911/197397137-e71ff68e-1d00-4acb-984b-a7174e9c8b66.png)![image](https://user-images.githubusercontent.com/63439911/197397150-b6adb45e-2a57-4b5e-b625-46fa5878bc26.png)
+![image](https://user-images.githubusercontent.com/63439911/197397160-ff433ce8-f14a-4368-b24e-3a02e5938146.png)
+![image](https://user-images.githubusercontent.com/63439911/197397168-c63b8149-2865-4614-bae9-855b2bd538f9.png)
+![image](https://user-images.githubusercontent.com/63439911/197397174-dfd5cd29-ff0e-4a4e-9359-c622ee05e9b4.png)
+### 버전 관리
+
+Deployment는 변경된 상태를 기록한다.
+
+```bash
+# 히스토리 확인
+kubectl rollout history deploy/echo-deploy
+
+# revision 1 히스토리 상세 확인
+kubectl rollout history deploy/echo-deploy --revision=1
+
+# 바로 전으로 롤백
+kubectl rollout undo deploy/echo-deploy
+
+# 특정 버전으로 롤백
+kubectl rollout undo deploy/echo-deploy --to-revision=2
+```
+
+### 배포 전략 설정
+
+RollingUpdate방식을 사용하여 동시에 업데이트하는 Pod의 개수를 변경하는 코드는 다음과 같다.
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-deploy-st
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: echo
+      tier: app
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 3
+  template:
+    metadata:
+      labels:
+        app: echo
+        tier: app
+    spec:
+      containers:
+        - name: echo
+          image: ghcr.io/subicura/echo:v1
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+```
 ## namespace란?
 ![image](https://user-images.githubusercontent.com/63439911/197184866-a8091438-13c3-4872-b16a-579e4fe463d8.png)
 쿠버네티스의 구조는 다음과 같이 워커 노드 위에 각 pod들이 배포되는 형식이다.
