@@ -175,14 +175,6 @@ namespace는 쿠버네티스 오브젝트를 묶는 하나의 가상공간 또�
 
 다만 isolation은 되지 않는다.
 
-### namespace의 목적
-
-- 네임스페이스 별 리소스 할당량 지정  
- ![image](https://user-images.githubusercontent.com/63439911/197187510-fd39b5f5-cc25-4a4e-a24e-f71147a0157c.png)
- 네임스페이스 별 CPU/GPU 할당량을 조절할 수 있다. 그렇게 하여 자원을 최대한 효율적으로 사용할 수 있다.  
-
-- 사용자 별 네임스페이스 접근 권한  
-사용자 인증 후, 해당 사용자가 api 또는 namespace에 권한이 있는지 체크 후 검증된 사용자만 api를 사용하게 할 수 있다.  
 ### namespace 사용
 ```
 apiVersion: v1
@@ -202,3 +194,13 @@ spec:
 kubectl apply -f test-namespace.yaml # 혹은
 kubectl create namespace test
 ```
+
+### namespace의 목적
+
+- 네임스페이스 별 리소스 할당량 지정  
+ ![image](https://user-images.githubusercontent.com/63439911/197187510-fd39b5f5-cc25-4a4e-a24e-f71147a0157c.png)
+ 네임스페이스 별 CPU/GPU 할당량을 조절할 수 있다. 그렇게 하여 자원을 최대한 효율적으로 사용할 수 있다.  
+
+- 사용자 별 네임스페이스 접근 권한  
+사용자 인증 후, 해당 사용자가 api 또는 namespace에 권한이 있는지 체크 후 검증된 사용자만 api를 사용하게 할 수 있다.  
+
