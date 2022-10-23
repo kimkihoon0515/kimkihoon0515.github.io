@@ -1,4 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-23T13:36:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">Linux</title><link href="http://localhost:4000/language/linux/" rel="alternate" type="text/html" title="Linux" /><published>2022-10-22T00:00:00+09:00</published><updated>2022-10-22T00:00:00+09:00</updated><id>http://localhost:4000/language/linux</id><content type="html" xml:base="http://localhost:4000/language/linux/"><![CDATA[<h2 id="리눅스-기본-명령어-정리">리눅스 기본 명령어 정리</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-23T15:12:14+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">Kubernetes - 기본 명령어</title><link href="http://localhost:4000/devops/kubernetes/" rel="alternate" type="text/html" title="Kubernetes - 기본 명령어" /><published>2022-10-23T00:00:00+09:00</published><updated>2022-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devops/kubernetes</id><content type="html" xml:base="http://localhost:4000/devops/kubernetes/"><![CDATA[<h2 id="kubectl-명령어">Kubectl 명령어</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>명령어</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>apply</td>
+      <td>원하는 상태를 적용한다. 보통 -f 옵션으로 파일과 함께 사용한다.</td>
+    </tr>
+    <tr>
+      <td>get</td>
+      <td>리소스 목록을 보여준다.</td>
+    </tr>
+    <tr>
+      <td>describe</td>
+      <td>리소스의 상태를 자세하게 보여준다.</td>
+    </tr>
+    <tr>
+      <td>delete</td>
+      <td>리소스를 제거한다.</td>
+    </tr>
+    <tr>
+      <td>logs</td>
+      <td>컨테이너의 로그를 본다.</td>
+    </tr>
+    <tr>
+      <td>exec</td>
+      <td>컨테이너에 명령어를 전달한다. 컨테이너에 주로 접근할 때 사용한다.</td>
+    </tr>
+    <tr>
+      <td>config</td>
+      <td>kubectl 설정을 관리한다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="리소스-목록보기-get">리소스 목록보기 (get)</h2>
+
+<p>출력 형태를 변경할 수 있는 <code class="language-plaintext highlighter-rouge">-o</code> 와 레이블을 확인할 수 있는 <code class="language-plaintext highlighter-rouge">—show-lables</code>가 있다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># pod 조회</span>
+kubectl get pod
+
+<span class="c"># 여러 개 조회 가능</span>
+kubectl get pods
+kubectl get po
+
+<span class="c"># 여러 type 선택 가능</span>
+kubectl get pod,service
+<span class="c"># 줄임말 가능</span>
+kubectl get po,svc
+
+<span class="c"># pod, replicaset, deployment, service, job 조회 =&gt; all</span>
+kubectl get all
+
+<span class="c"># 결과 포맷 변경</span>
+kubectl get pod <span class="nt">-o</span> wide
+kubectl get pod <span class="nt">-o</span> yaml
+kubectl get pod <span class="nt">-o</span> json
+
+<span class="c"># label 조회</span>
+kubectl get pod <span class="nt">--show-labels</span>
+</code></pre></div></div>
+
+<h2 id="리소스-상태-보기-describe">리소스 상태 보기 (describe)</h2>
+
+<p>describe 명령어를 통해 해당 리소스의 상세한 정보를 볼 수 있다. 쿠버네티스를 운영하면서 가장 많이 확인하는 부분은 <code class="language-plaintext highlighter-rouge">events</code> 이다. 현재 pod의 상태를 이벤트 별로 확인할 수 있다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># pod 조회로 이름 검색</span>
+kubectl get pod
+
+<span class="c"># 조회한 이름으로 상세 확인</span>
+kubectl describe pod/[name] 
+</code></pre></div></div>
+
+<h2 id="컨테이너-로그-조회-logs">컨테이너 로그 조회 (logs)</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 특정 pod 로그 조회</span>
+kubectl logs <span class="o">[</span>pod_name]
+
+<span class="c"># 실시간 로그 보기</span>
+kubectl logs <span class="nt">-f</span> <span class="o">[</span>pod_name]
+</code></pre></div></div>
+
+<h2 id="컨테이너-명령-전달-exec">컨테이너 명령 전달 (exec)</h2>
+
+<p>shell로 접속하여 컨테이너 상태를 확인하는 경우에 <code class="language-plaintext highlighter-rouge">-it</code> 옵션을 사용하고 여러 개의 컨테이너가 있는 경우에는 <code class="language-plaintext highlighter-rouge">-c</code> 옵션으로 컨테이너를 지정한다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nb">exec</span> <span class="nt">-it</span> <span class="o">[</span>pod_name] <span class="nt">--</span> <span class="o">[</span><span class="nb">command</span><span class="o">]</span>
+</code></pre></div></div>
+
+<h2 id="설정-관리-config">설정 관리 (config)</h2>
+
+<p>kubectl은 여러 개의 쿠버네티스 클러스터를 context로 설정하고 필요에 따라 선택할 수 있다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 현재 컨텍스트 확인
+kubectl config current-context
+
+# 컨텍스트 설정
+kubectl config use-context minikube
+</code></pre></div></div>]]></content><author><name>김기훈</name><email>tega1996@naver.com</email></author><category term="DevOps" /><summary type="html"><![CDATA[Kubectl 명령어]]></summary></entry><entry><title type="html">Linux</title><link href="http://localhost:4000/language/linux/" rel="alternate" type="text/html" title="Linux" /><published>2022-10-22T00:00:00+09:00</published><updated>2022-10-22T00:00:00+09:00</updated><id>http://localhost:4000/language/linux</id><content type="html" xml:base="http://localhost:4000/language/linux/"><![CDATA[<h2 id="리눅스-기본-명령어-정리">리눅스 기본 명령어 정리</h2>
 
 <h2 id="ls">ls</h2>
 <p>디렉토리 내 파일 목록 나열</p>
