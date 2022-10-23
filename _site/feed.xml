@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-23T15:12:14+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">Kubernetes - 기본 명령어</title><link href="http://localhost:4000/devops/kubernetes/" rel="alternate" type="text/html" title="Kubernetes - 기본 명령어" /><published>2022-10-23T00:00:00+09:00</published><updated>2022-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devops/kubernetes</id><content type="html" xml:base="http://localhost:4000/devops/kubernetes/"><![CDATA[<h2 id="kubectl-명령어">Kubectl 명령어</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-23T17:20:28+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">Kubernetes - 기본 명령어</title><link href="http://localhost:4000/devops/kubernetes/" rel="alternate" type="text/html" title="Kubernetes - 기본 명령어" /><published>2022-10-23T00:00:00+09:00</published><updated>2022-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devops/kubernetes</id><content type="html" xml:base="http://localhost:4000/devops/kubernetes/"><![CDATA[<h2 id="kubectl-명령어">Kubectl 명령어</h2>
 
 <table>
   <thead>
@@ -298,6 +298,29 @@ file /user/bin/gzip
 
 <p>쿠버네티스 클러스터 구성 요소</p>
 
+<h2 id="쿠버네티스-클러스터란">쿠버네티스 클러스터란?</h2>
+
+<p>컨테이너 형태의 어플리케이션을 호스팅하는 물리/가상 환경의 노드들로 이루어진 집합이다.</p>
+
+<p>쿠버네티스는 호스트 환경에 구성도니 자원들을 클러스터 단위로 추상화해서 관리한다.</p>
+
+<p>하나의 클러스터 안에는 클러스터 내부 요소들을 제어하는 <code class="language-plaintext highlighter-rouge">컨트롤 플레인 역할</code>을 수행할 <code class="language-plaintext highlighter-rouge">마스터 노드</code>를 두고 관리자는 이 마스터 노드를 통해 클러스터 전체를 제어하는 구성을 따른다.</p>
+
+<p>쿠버네티스 클러스터는 용도에 따라 크게 <code class="language-plaintext highlighter-rouge">워커 노드</code>와 <code class="language-plaintext highlighter-rouge">마스터 노드</code>로 구분된다.</p>
+
+<ul>
+  <li>워커 노드 : 각기 다른 목적과 기능으로 세분화된 컨테이너들이 실제 배치되는 노드이다.</li>
+  <li>마스터 노드 : 컨테이너 선단을 지휘하는 통제역할을 한다. 대규모 컨테이너를 운영하려면 각 워커 노드들의 가용 리소스 현황을 고려하여 최적의 컨테이너 배치와 모니터링, 그리고 각 컨테이너에 대한 효율적인 추적 관리가 필요하다. 이러한 역할을 수행한다.</li>
+</ul>
+
+<h2 id="쿠버네티스-클러스터의-내부-구조">쿠버네티스 클러스터의 내부 구조</h2>
+
+<p>쿠버네티스에서 클러스터들의 모든 구성 요소는 오직 API 서버를 통해서만 접근이 가능하다.
+<img src="https://user-images.githubusercontent.com/63439911/197381920-d2d64192-4960-4f81-9619-efc682e790b8.png" alt="image" />
+<code class="language-plaintext highlighter-rouge">Kubernetes Master</code>는 마스터 노드에 포함된 <code class="language-plaintext highlighter-rouge">컨트롤 플레인</code>에 해당한다.</p>
+
+<p>컨트롤플레인은 클러스터 전체의 workload resource 등 주요 구성 요소들을 배포하고 제어하는 역할을 한다.</p>
+
 <h2 id="컨트롤-플레인-컴포넌트">컨트롤 플레인 컴포넌트</h2>
 
 <p>클러스터에 관한 전반적인 결정을 수행하고 클러스터 이벤트를 감지하고 반응한다.</p>
@@ -322,7 +345,7 @@ file /user/bin/gzip
   <p>kube-scheduler</p>
 </blockquote>
 
-<p>노드가 배정되지 않은 새로 생성된 파드를 감지하고 실행할 노드를 선택하는 컨트롤 플레인 컴포넌트이다.</p>
+<p>클러스터는 여러 노드로 구성되어 있고 기본적인 작업의 단위인 파드는 여러 노드 중 특정 노드에 배치되어 동작하게 된다. 이 때 새로 새성된 파드를 감지하여 어떤 노드로 배치할지 결정하는 작업을 스케줄링이라고 한다. 이 스케줄링을 담당하는 컴포넌트가 kube-scheduler이다.</p>
 
 <blockquote>
   <p>kube-controller-manager</p>
