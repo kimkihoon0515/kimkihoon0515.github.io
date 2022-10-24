@@ -34,4 +34,10 @@ var store = [{
         "tags": [],
         "url": "/devops/kubernetes/",
         "teaser": null
+      },{
+        "title": "MLOps",
+        "excerpt":" ","categories": [],
+        "tags": [],
+        "url": "/mlops/",
+        "teaser": null
       }]
