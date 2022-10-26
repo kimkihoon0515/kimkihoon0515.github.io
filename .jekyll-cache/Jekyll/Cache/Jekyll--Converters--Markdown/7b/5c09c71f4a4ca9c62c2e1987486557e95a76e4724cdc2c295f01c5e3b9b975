@@ -1,0 +1,60 @@
+I"}	<h2 id="sagemaker">SageMaker</h2>
+<p><img src="https://user-images.githubusercontent.com/63439911/198020774-94203ef7-ec61-4c7d-98e0-4fc7e62dd142.png" alt="image" />
+EC2 인스턴스 위에 설치한 완전 관리형 서비스이다. EC2 인스턴스 위에 Jupyter Notebook을 설치한 것</p>
+
+<h3 id="장점">장점</h3>
+
+<ul>
+  <li>클라우드 환경이라 고성능 컴퓨터가 필요없음</li>
+  <li>ML 패키지 설치가 필요없음</li>
+  <li>코드 작성부터 배포까지 한 번에 가능</li>
+</ul>
+
+<h2 id="bentoml">BentoML</h2>
+
+<h3 id="serving">Serving</h3>
+
+<p>개발된 모델을 서빙 하는 것이다.</p>
+
+<p>크게 <code class="language-plaintext highlighter-rouge">Batch,</code> <code class="language-plaintext highlighter-rouge">Online,</code> <code class="language-plaintext highlighter-rouge">Edge(Mobile)</code> 로 나눠져있다. Serving 시에 의존성 관리를 중요하게 생각하기 때문에 Docker나 Kubernetes를 기반으로 한다.</p>
+
+<ul>
+  <li>Batch Serving : 특정 주기로 서빙하는 것
+    <ul>
+      <li>Batch로 한꺼번에 많은 양을 처리함</li>
+      <li>Airflow나 Cronjob을 특정 주기 시간단위로 예측한다.</li>
+      <li>예측 결과를 DB에 저장하고 서버에서 활용한다.</li>
+    </ul>
+  </li>
+  <li>Online Serving : API 서빙, 실시간 요청에 따른 반응을 함
+    <ul>
+      <li>동시에 여러 요청에 대한 확장대책이 필요하고 Batch 처리가 불가능</li>
+      <li>Kfserving, BentoML, Tensorflow Serving, Seldon Core 등의 라이브러리가 있다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="bentoml-1">BentoML</h3>
+<p><img src="https://user-images.githubusercontent.com/63439911/198021167-60d6e1db-df00-489f-a8c9-e7ec4175144e.png" alt="image" />
+적은 코드로 production 서비스까지 가능하다. 모델 관리를 위한 웹 대시보드 또한 존재한다.</p>
+
+<p>Python Script로 작성해서 Airflow로 접근이 가능하다.</p>
+
+<ul>
+  <li>
+    <p>장점</p>
+
+    <p>API 서버를 자동으로 만들어준다.</p>
+
+    <p>모델 저장소와 배포 관리를 위한 웹 대시보드, swagger 제공</p>
+  </li>
+  <li>
+    <p>Adaptive Micro Batching</p>
+
+    <p>모델 서빙시 개별 추론 요청을 배치단위로 처리하는 것은 성능에 큰 영향을 준다.</p>
+
+    <p>BentoML은 HTTP 처리 데이터 처리과정까지 Micro batching을 지원한다.</p>
+  </li>
+</ul>
+
+:ET
