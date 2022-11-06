@@ -1,4 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-26T21:05:24+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">MLOps</title><link href="http://localhost:4000/mlops/mlops/" rel="alternate" type="text/html" title="MLOps" /><published>2022-10-24T00:00:00+09:00</published><updated>2022-10-24T00:00:00+09:00</updated><id>http://localhost:4000/mlops/mlops</id><content type="html" xml:base="http://localhost:4000/mlops/mlops/"><![CDATA[<h2 id="sagemaker">SageMaker</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-06T23:17:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">배운 것들을 정리하고 기록하는 블로그</title><subtitle>최대한 꾸준히 글을 작성하는 것이 목표.</subtitle><author><name>김기훈</name><email>tega1996@naver.com</email></author><entry><title type="html">MLflow</title><link href="http://localhost:4000/mlops/mlflow/" rel="alternate" type="text/html" title="MLflow" /><published>2022-11-06T00:00:00+09:00</published><updated>2022-11-06T00:00:00+09:00</updated><id>http://localhost:4000/mlops/mlflow</id><content type="html" xml:base="http://localhost:4000/mlops/mlflow/"><![CDATA[<h1 id="mlflow">MLflow</h1>
+
+<h2 id="mlflow란">MLflow란?</h2>
+
+<p>MLflow는 Tracking, Projects, Models, Model Registry의 4가지 구성요소로 이루어져 있다. 모든 머신러닝 라이브러리에서 작동하고, 규칙에 따라 코드에 대한 대부분의 사항을 결정하고 기존 코드 베이스에 통합하기 위해 최소한의 변경만 하도록 설계되었다.</p>
+
+<p>머신러닝 workflow의 어려운 점들을 살펴보면 다음과 같다.</p>
+
+<ul>
+  <li>실험 추적하기 어렵다.</li>
+  <li>코드를 재현하기 어렵다.</li>
+  <li>모델을 패키징하고 배포하는 표준 방법이 없다.</li>
+  <li>모델(버전 및 단계 전환)을 관리 할 중앙 저장소가 없다.</li>
+</ul>
+
+<h2 id="mlflow-구성요소">MLflow 구성요소</h2>
+
+<p><img width="706" alt="image" src="https://user-images.githubusercontent.com/63439911/200175937-dfeafcd0-ebaa-46d0-aa5b-41190c77f9ed.png" /></p>
+
+<h3 id="1-mlflow-tracking">1. MLflow Tracking</h3>
+
+<p>실험 기록을 추적하며 파라미터와 그 결과를 비교합니다.</p>
+
+<h3 id="2-mlflow-projects">2. MLflow Projects</h3>
+
+<p>ML code를 재사용, 재구현 가능한 형태로 패키징하여 다른 사람들과 공유하거나 프로덕션으로 변환한다.</p>
+
+<h3 id="3-models">3. Models</h3>
+
+<p>다양한 ML 라이브러리로 만들어진 모델을 관리하고 다양한 모델 서빙과 추론 플랫폼으로 배포한다.</p>
+
+<h3 id="4-registry">4. Registry</h3>
+
+<p>중앙 모델 스토어를 제공함으로써, 한 MLflow 모델의 전체 라이프 사이클을 협동적으로 관리한다. 이러한 관리 작업에는 모델 버전관리, 모델 스테이지 관리, 주석 처리 등을 포함한다.</p>
+
+<h2 id="tracking">Tracking</h2>
+
+<p>모델 학습 세션에 대한 메타데이터(log, hyperparmeter 정보, loss 변화, 모델 성능 등)를 관리하는 중앙화된 레포지토리를 제공하는 기능이다.</p>
+
+<p>MLflow Tracking에는 두 가지 backend store가 있고 다음과 같은 특징을 가집니다.</p>
+
+<ol>
+  <li>Entity store : 학습과 관련된 가벼운 메타데이터를 수집하고 통합한다. Metric, Parameter, Source 및 버전 정보를 포함한다.
+    <ol>
+      <li>file store : 유닉스 및 윈도우 파일 시스템과 호환됨</li>
+      <li>SQL store : SQLAlchemy를 사용하여 대부분의 DB와 연동이 가능하다.</li>
+      <li>REST store : 자체적인 인프라를 구축하고 싶은 조직에게 restful한 추상화를 제공한다. 기존의 시스템과 효과적으로 결합이 가능하다.</li>
+    </ol>
+  </li>
+  <li>Artifact Store : 메타데이터와 다르게 상대적으로 무거운 데이터를 저장한다. 학습데이터, 모델파일이 이에 해당합니다.
+    <ol>
+      <li>Amazon S3 backend Store</li>
+      <li>GCP</li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="project">Project</h2>
+
+<p>모델의 재생산성, 재사용성을 확보하기 위한 기능을 제공한다.</p>
+
+<ol>
+  <li>재생산가능한 ML 실행을 위한 패키징 포맷
+    <ol>
+      <li>어떤 코드 폴더든 git repository든 지원한다.</li>
+      <li>Project Config를 포함한 optional ML project file을 관리할 수 있다.</li>
+    </ol>
+  </li>
+  <li>재생산성을 위해 dependency 정의
+    <ol>
+      <li>Conda/R/docker dependency에 대한 정보를 ML 프로젝트에 명시적으로 기록할 수 있다.</li>
+      <li>거의 모든 환경에서 재생산 가능하도록 지원한다.</li>
+    </ol>
+  </li>
+  <li>프로젝트 구동을 위한 실행 API
+    <ol>
+      <li>CLI/Python/Java</li>
+      <li>로컬 및 원격 실행을 지원한다.</li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="mlflow-models">MLflow Models</h2>
+
+<p>모델이 학습을 다 한 이후에는 정해진 양식에 따른 입력을 받았을 때 추론 결과를 낼 수 있도록 배포를 해야한다. 이를 위해 MLflow는 다양한 환경(Docker, Spark, K8s) 다양한 툴 (TF, Pytorch, Scikit-Learn) 로 모델 배포를 할 수 있도록 중간 역할을 해준다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/63439911/200175957-5884dd03-cb06-4d64-82a6-b8f1c47d3d5a.png" alt="image" /></p>
+
+<ul>
+  <li>ML 모델을 위한 패키징 포맷 제공 : ML 모델 파일이 있는 어떤 디렉토리든 사용 가능하다.</li>
+  <li>재생산성을 위해 dependency 정의 : ML 모델의 config에 conda 환경 등의 dependency에 대한 정보를 제공할 수 있다.</li>
+  <li>모델 생성 유틸리티 : 어떤 프레임워크에서 나온 모델이든 MLflow 포맷으로 저장해준다.</li>
+  <li>배포 API : CLI/Python/R/Java 등의 배포 API를 제공한다.</li>
+</ul>
+
+<h2 id="mlflow-registry">Mlflow Registry</h2>
+
+<p>ML 모델을 개발하다보면 하이퍼파라미터, 모델의 구조든 다양한 변화를 가한 버전이 생긴다. 이러한 다양한 버전, 스테이지를 충돌 없이 쉽게 관리할 수 있는 기능을 제공한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/63439911/200175965-1ada89da-e52b-4477-a75b-1139fcaf9a95.png" alt="image" /></p>
+
+<ul>
+  <li>중앙화된 레포지토리 : 이 레포지토리는 모든 등록된 모델들과 그에 상응하는 메타데이터를 포함하고 있다. 등록된 모델들의 모든 기존 버전들은 여기에 저장되고 접근이 가능하다.</li>
+  <li>모델 Staging : 등록된 모델들은 미리 정의되거나 혹은 커스텀 스테이지에 할당되어 ML lifecycle 내에서 어떤 phase에 있는지를 나타낼 수 있다. 이를 통해 개발자들은 프로덕션 모델에 영향을 미치지 않은 채로 한 모델의 새로운 버전을 개발 스테이지로 배포할 수 있게 해준다.</li>
+  <li>변화 관리와 모니터링 : 사용자들은 모델 레지스트리에 변경사항이 발생했을 때 핵심 정보를 로그로 남길 수 있도록 이벤트를 설계할 수 있다.</li>
+</ul>]]></content><author><name>김기훈</name><email>tega1996@naver.com</email></author><category term="MLOps" /><summary type="html"><![CDATA[MLflow]]></summary></entry><entry><title type="html">MLOps</title><link href="http://localhost:4000/mlops/mlops/" rel="alternate" type="text/html" title="MLOps" /><published>2022-10-24T00:00:00+09:00</published><updated>2022-10-24T00:00:00+09:00</updated><id>http://localhost:4000/mlops/mlops</id><content type="html" xml:base="http://localhost:4000/mlops/mlops/"><![CDATA[<h2 id="sagemaker">SageMaker</h2>
 <p><img src="https://user-images.githubusercontent.com/63439911/198020774-94203ef7-ec61-4c7d-98e0-4fc7e62dd142.png" alt="image" />
 EC2 인스턴스 위에 설치한 완전 관리형 서비스이다. EC2 인스턴스 위에 Jupyter Notebook을 설치한 것</p>
 
