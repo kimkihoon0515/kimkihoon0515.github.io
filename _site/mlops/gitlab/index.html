@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>MLflow - 배운 것들을 정리하고 기록하는 블로그</title>
-<meta name="description" content="MLflow">
+<!-- begin _includes/seo.html --><title>GitLab - 배운 것들을 정리하고 기록하는 블로그</title>
+<meta name="description" content="Gitlab">
 
 
   <meta name="author" content="김기훈">
@@ -22,30 +22,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="배운 것들을 정리하고 기록하는 블로그">
-<meta property="og:title" content="MLflow">
-<meta property="og:url" content="http://localhost:4000/mlops/mlflow/">
+<meta property="og:title" content="GitLab">
+<meta property="og:url" content="http://localhost:4000/mlops/gitlab/">
 
 
-  <meta property="og:description" content="MLflow">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2022-11-06T00:00:00+09:00">
+  <meta property="og:description" content="Gitlab">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2022-11-07T00:00:00+09:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/mlops/mlflow/">
+
+<link rel="canonical" href="http://localhost:4000/mlops/gitlab/">
 
 
 
@@ -264,16 +264,16 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="MLflow">
-    <meta itemprop="description" content="MLflow">
-    <meta itemprop="datePublished" content="2022-11-06T00:00:00+09:00">
+    <meta itemprop="headline" content="GitLab">
+    <meta itemprop="description" content="Gitlab">
+    <meta itemprop="datePublished" content="2022-11-07T00:00:00+09:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/mlops/mlflow/" class="u-url" itemprop="url">MLflow
+            <a href="http://localhost:4000/mlops/gitlab/" class="u-url" itemprop="url">GitLab
 </a>
           </h1>
           
@@ -304,118 +304,156 @@
         
           <aside class="sidebar__right sticky">
             <nav class="toc">
-              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> MLflow</h4></header>
-              <ul class="toc__menu"><li><a href="#mlflow">MLflow</a><ul><li><a href="#mlflow란">MLflow란?</a></li><li><a href="#mlflow-구성요소">MLflow 구성요소</a><ul><li><a href="#1-mlflow-tracking">1. MLflow Tracking</a></li><li><a href="#2-mlflow-projects">2. MLflow Projects</a></li><li><a href="#3-models">3. Models</a></li><li><a href="#4-registry">4. Registry</a></li></ul></li><li><a href="#tracking">Tracking</a></li><li><a href="#project">Project</a></li><li><a href="#mlflow-models">MLflow Models</a></li><li><a href="#mlflow-registry">Mlflow Registry</a></li></ul></li></ul>
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GitLab</h4></header>
+              <ul class="toc__menu"><li><a href="#gitlab">Gitlab</a></li><li><a href="#gitlab-cicd-시작">GitLab CI/CD 시작</a><ul><li><a href="#runner를-사용할-수-있는지-확인">Runner를 사용할 수 있는지 확인</a></li><li><a href="#gitlab-ciyml-파일-생성">.gitlab-ci.yml 파일 생성</a></li><li><a href="#파이프라인-및-작업-상태-보기">파이프라인 및 작업 상태 보기</a></li></ul></li><li><a href="#cicd-pipelines">CI/CD Pipelines</a><ul><li><a href="#파이프라인에-수동-상호작용-추가">파이프라인에 수동 상호작용 추가</a></li><li><a href="#파이프라인-기간-계산-방법">파이프라인 기간 계산 방법</a></li><li><a href="#cicd-jobs">CI/CD Jobs</a></li></ul></li><li><a href="#cicd-schedules">CI/CD Schedules</a><ul><li><a href="#only-및-except-사용">Only 및 Except 사용</a></li></ul></li></ul>
 
             </nav>
           </aside>
         
-        <h1 id="mlflow">MLflow</h1>
+        <h1 id="gitlab">Gitlab</h1>
 
-<h2 id="mlflow란">MLflow란?</h2>
-
-<p>MLflow는 Tracking, Projects, Models, Model Registry의 4가지 구성요소로 이루어져 있다. 모든 머신러닝 라이브러리에서 작동하고, 규칙에 따라 코드에 대한 대부분의 사항을 결정하고 기존 코드 베이스에 통합하기 위해 최소한의 변경만 하도록 설계되었다.</p>
-
-<p>머신러닝 workflow의 어려운 점들을 살펴보면 다음과 같다.</p>
-
-<ul>
-  <li>실험 추적하기 어렵다.</li>
-  <li>코드를 재현하기 어렵다.</li>
-  <li>모델을 패키징하고 배포하는 표준 방법이 없다.</li>
-  <li>모델(버전 및 단계 전환)을 관리 할 중앙 저장소가 없다.</li>
-</ul>
-
-<h2 id="mlflow-구성요소">MLflow 구성요소</h2>
-
-<p><img width="706" alt="image" src="https://user-images.githubusercontent.com/63439911/200175937-dfeafcd0-ebaa-46d0-aa5b-41190c77f9ed.png" /></p>
-
-<h3 id="1-mlflow-tracking">1. MLflow Tracking</h3>
-
-<p>실험 기록을 추적하며 파라미터와 그 결과를 비교합니다.</p>
-
-<h3 id="2-mlflow-projects">2. MLflow Projects</h3>
-
-<p>ML code를 재사용, 재구현 가능한 형태로 패키징하여 다른 사람들과 공유하거나 프로덕션으로 변환한다.</p>
-
-<h3 id="3-models">3. Models</h3>
-
-<p>다양한 ML 라이브러리로 만들어진 모델을 관리하고 다양한 모델 서빙과 추론 플랫폼으로 배포한다.</p>
-
-<h3 id="4-registry">4. Registry</h3>
-
-<p>중앙 모델 스토어를 제공함으로써, 한 MLflow 모델의 전체 라이프 사이클을 협동적으로 관리한다. 이러한 관리 작업에는 모델 버전관리, 모델 스테이지 관리, 주석 처리 등을 포함한다.</p>
-
-<h2 id="tracking">Tracking</h2>
-
-<p>모델 학습 세션에 대한 메타데이터(log, hyperparmeter 정보, loss 변화, 모델 성능 등)를 관리하는 중앙화된 레포지토리를 제공하는 기능이다.</p>
-
-<p>MLflow Tracking에는 두 가지 backend store가 있고 다음과 같은 특징을 가집니다.</p>
+<h1 id="gitlab-cicd-시작">GitLab CI/CD 시작</h1>
 
 <ol>
-  <li>Entity store : 학습과 관련된 가벼운 메타데이터를 수집하고 통합한다. Metric, Parameter, Source 및 버전 정보를 포함한다.
-    <ol>
-      <li>file store : 유닉스 및 윈도우 파일 시스템과 호환됨</li>
-      <li>SQL store : SQLAlchemy를 사용하여 대부분의 DB와 연동이 가능하다.</li>
-      <li>REST store : 자체적인 인프라를 구축하고 싶은 조직에게 restful한 추상화를 제공한다. 기존의 시스템과 효과적으로 결합이 가능하다.</li>
-    </ol>
-  </li>
-  <li>Artifact Store : 메타데이터와 다르게 상대적으로 무거운 데이터를 저장한다. 학습데이터, 모델파일이 이에 해당합니다.
-    <ol>
-      <li>Amazon S3 backend Store</li>
-      <li>GCP</li>
-    </ol>
-  </li>
+  <li>Job을 실행할 수 있는 Runner가 있는지 확인한다. 없을 경우 GitLab Runner를 설치하고 인스턴스, 프로젝트 또는 그룹에 대한 러너를 등록한다.</li>
+  <li>.gitlab-ci.yml 파일을 레포지토리의 루트에 생성한다. 이 파일은 CI/CD Job을 정의하는 곳이다.</li>
 </ol>
 
-<h2 id="project">Project</h2>
+<p>파일을 레포지토리에 커밋하면 러너가 Job을 실행한다. Job의 결과는 파이프라인에 표시된다.</p>
 
-<p>모델의 재생산성, 재사용성을 확보하기 위한 기능을 제공한다.</p>
+<h2 id="runner를-사용할-수-있는지-확인">Runner를 사용할 수 있는지 확인</h2>
+
+<p>GitLab에서 Runner는 CI/CD Job을 실행하는 에이전트이다. Gitlab 인스턴스의 모든 프로젝트에서 사용할 수 있는 공유 러너를 포함하여 프로젝트에서 사용할 수 있는 러너가 이미 있을 수 있다.</p>
+
+<p>만약 사용가능한 러너를 보고 싶으면</p>
+
+<ul>
+  <li>Settings &gt; CI/CD로 이동하여 Runners를 확장한다.</li>
+</ul>
+
+<p>UI의 Runners 페이지에 러너가 없다면 사용자 또는 시스템 관리자가 GitLab Runner를 설치하고 하나 이상의 러너를 등록해야 한다.</p>
+
+<p>CI/CD를 테스트 하는 경우, 로컬 컴퓨터에 Gitlab Runner를 설치하고 러너를 등록할 수 있다. CI/CD Job이 실행되면 로컬 컴퓨터에서 실행된다.</p>
+
+<h2 id="gitlab-ciyml-파일-생성">.gitlab-ci.yml 파일 생성</h2>
+
+<p>.gitlab-ci.yml 파일은 GitLab CI/CD에 대한 특정 지침을 구성하는 YAML 파일이다. 이 파일에서는 다음 2가지를 정의한다.</p>
+
+<ul>
+  <li>러너가 실행해야 하는 작업의 구조와 순서</li>
+  <li>특정 조건이 발생할 때 러너가 내려야 하는 결정</li>
+</ul>
+
+<p>master에 커밋하면 통일한 테스트 슈트 (Test Suite)를 실행하고 애플리케이션도 게시하려고 한다.</p>
+
+<p>.gitlab-ci.yml 파일을 생성하려면 :</p>
 
 <ol>
-  <li>재생산가능한 ML 실행을 위한 패키징 포맷
-    <ol>
-      <li>어떤 코드 폴더든 git repository든 지원한다.</li>
-      <li>Project Config를 포함한 optional ML project file을 관리할 수 있다.</li>
-    </ol>
-  </li>
-  <li>재생산성을 위해 dependency 정의
-    <ol>
-      <li>Conda/R/docker dependency에 대한 정보를 ML 프로젝트에 명시적으로 기록할 수 있다.</li>
-      <li>거의 모든 환경에서 재생산 가능하도록 지원한다.</li>
-    </ol>
-  </li>
-  <li>프로젝트 구동을 위한 실행 API
-    <ol>
-      <li>CLI/Python/Java</li>
-      <li>로컬 및 원격 실행을 지원한다.</li>
-    </ol>
-  </li>
+  <li>Project overview &gt; Details로 이동한다.</li>
+  <li>파일 목록 위에서 커밋할 브랜치를 선택하고 New File을 선택한다.</li>
+  <li>파일 이름으로 .gitlab-ci.yml 을 입력하고 파일 내용을 작성한다.</li>
+  <li>Commit changes 버튼을 누른다.</li>
+  <li>파이프라인 시작</li>
 </ol>
 
-<h2 id="mlflow-models">MLflow Models</h2>
+<h2 id="파이프라인-및-작업-상태-보기">파이프라인 및 작업 상태 보기</h2>
 
-<p>모델이 학습을 다 한 이후에는 정해진 양식에 따른 입력을 받았을 때 추론 결과를 낼 수 있도록 배포를 해야한다. 이를 위해 MLflow는 다양한 환경(Docker, Spark, K8s) 다양한 툴 (TF, Pytorch, Scikit-Learn) 로 모델 배포를 할 수 있도록 중간 역할을 해준다.</p>
+<p>파이프라인을 보려면 CI/CD &gt; Pipelines로 이동한다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/63439911/200175957-5884dd03-cb06-4d64-82a6-b8f1c47d3d5a.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/63439911/200330704-ac82f12c-c3ed-490a-82be-73e0e622bae2.png" alt="image" /></p>
 
-<ul>
-  <li>ML 모델을 위한 패키징 포맷 제공 : ML 모델 파일이 있는 어떤 디렉토리든 사용 가능하다.</li>
-  <li>재생산성을 위해 dependency 정의 : ML 모델의 config에 conda 환경 등의 dependency에 대한 정보를 제공할 수 있다.</li>
-  <li>모델 생성 유틸리티 : 어떤 프레임워크에서 나온 모델이든 MLflow 포맷으로 저장해준다.</li>
-  <li>배포 API : CLI/Python/R/Java 등의 배포 API를 제공한다.</li>
-</ul>
+<p>다음과 같이 3가지 파이프라인이 표시되어야 한다.</p>
 
-<h2 id="mlflow-registry">Mlflow Registry</h2>
+<h1 id="cicd-pipelines">CI/CD Pipelines</h1>
 
-<p>ML 모델을 개발하다보면 하이퍼파라미터, 모델의 구조든 다양한 변화를 가한 버전이 생긴다. 이러한 다양한 버전, 스테이지를 충돌 없이 쉽게 관리할 수 있는 기능을 제공한다.</p>
+<p>파이프라인은 지속적 통합, 제공 및 배포의 최상위 구성 요소이다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/63439911/200175965-1ada89da-e52b-4477-a75b-1139fcaf9a95.png" alt="image" /></p>
+<p>파이프라인은 다음으로 구성된다.</p>
 
 <ul>
-  <li>중앙화된 레포지토리 : 이 레포지토리는 모든 등록된 모델들과 그에 상응하는 메타데이터를 포함하고 있다. 등록된 모델들의 모든 기존 버전들은 여기에 저장되고 접근이 가능하다.</li>
-  <li>모델 Staging : 등록된 모델들은 미리 정의되거나 혹은 커스텀 스테이지에 할당되어 ML lifecycle 내에서 어떤 phase에 있는지를 나타낼 수 있다. 이를 통해 개발자들은 프로덕션 모델에 영향을 미치지 않은 채로 한 모델의 새로운 버전을 개발 스테이지로 배포할 수 있게 해준다.</li>
-  <li>변화 관리와 모니터링 : 사용자들은 모델 레지스트리에 변경사항이 발생했을 때 핵심 정보를 로그로 남길 수 있도록 이벤트를 설계할 수 있다.</li>
+  <li>수행할 작업을 정의하는 Jobs. (코드를 컴파일하거나 테스트 하는 작업)</li>
+  <li>작업을 실행할 시기를 정의하는 Stages. (코드를 컴파일하는 단계 후에 테스트를 실행하는 단계)</li>
 </ul>
+
+<p>Job은 러너에 의해 실행된다. 동시 러너가 충분한 경우, 동일한 단계의 여러 작업이 병렬로 실행된다.</p>
+
+<p>한 단계의 모든 작업이 성공하면 파이프라인은 다음 단계로 넘어간다.</p>
+
+<p>한 단계의 어떤 작업이 실패하면 다음 단계는 일반적으로 실행되지 않고 파이프라인이 일찍 종료된다.</p>
+
+<p>일반적으로 파이프라인은 자동으로 실행되며 생성된 후에는 개입이 필요하지 않다.</p>
+
+<p>일반적으로 파이프라인은 다음 4단계의 순서로 실행된다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">compile</code> 이라는 작업이 있는 build 단계</li>
+  <li><code class="language-plaintext highlighter-rouge">test1</code> 및 <code class="language-plaintext highlighter-rouge">test2</code> 라는 두 개의 작업이 있는 <code class="language-plaintext highlighter-rouge">test</code> 단계</li>
+  <li><code class="language-plaintext highlighter-rouge">deploy-to-stage</code> 라는 작업이 있는 <code class="language-plaintext highlighter-rouge">staging</code> 단계</li>
+  <li><code class="language-plaintext highlighter-rouge">deploy-to-prod</code> 라는 작업이 있는 <code class="language-plaintext highlighter-rouge">production</code> 단계</li>
+</ul>
+
+<h2 id="파이프라인에-수동-상호작용-추가">파이프라인에 수동 상호작용 추가</h2>
+
+<p><code class="language-plaintext highlighter-rouge">when:manual</code> 키워드를 사용하여 구성된 수동 작업을 사용하면 파이프라인에서 진행하기 전에 수동 상호작용을 요구할 수 있다.</p>
+
+<p>파이프라인 그래프에서 바로 이 작업을 수행할 수 있다. 특정 Job을 실행하려면 재생 버튼을 누르기만 하면 된다.</p>
+
+<h2 id="파이프라인-기간-계산-방법">파이프라인 기간 계산 방법</h2>
+
+<p>각 Job은 Period 로 표시되며 다음으로 구성된다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Period#first</code> (job이 시작되었을 때)</li>
+  <li><code class="language-plaintext highlighter-rouge">Period#last</code> (job이 끝났을 때)</li>
+</ul>
+
+<h2 id="cicd-jobs">CI/CD Jobs</h2>
+
+<p>파이프라인 구성은 Jobs로 시작된다. Job은 .gitlab-ci.yml 파일의 가장 기본적인 요소이다.</p>
+
+<ul>
+  <li>어떤 조건에서 실행되어야 할 지 명시하는 제약 조건으로 정의됨</li>
+  <li>임의의 이름을 가진 최상위 요소이며 최서한 script 절을 포함함</li>
+  <li>정의할 수 있는 수에는 제한이 없다</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>job1:
+	script: <span class="s2">"execute-script-for-job1"</span>
+
+job2:
+	script: <span class="s2">"execute-script-for-job2"</span>
+</code></pre></div></div>
+
+<p>각 Job이 서로 다른 명령을 실행하는 두 개의 개별 Job이 있는 가장 간단한 CI/CD 구성이다.</p>
+
+<p>Job은 러너에 의해 선택되고 러너 환경 내에서 실행된다. 각 Job이 독립적으로 실행되는 것이 중요하다.</p>
+
+<h1 id="cicd-schedules">CI/CD Schedules</h1>
+
+<p>프로젝트의 파이프라인을 예약하려면</p>
+
+<ol>
+  <li>프로젝트의 CI/CD &gt; Schedules 페이지로 이동한다.</li>
+  <li>New schedule 버튼을 클릭한다.</li>
+  <li>Schedule a new pipeline 양식을 채운다.</li>
+  <li>Save pipeline schedule 버튼을 클릭한다.</li>
+</ol>
+
+<h2 id="only-및-except-사용">Only 및 Except 사용</h2>
+
+<p>파이프라인이 예약된 경우에만 실행되도록 Job을 구성하려면 구성 키워드 only 및 except를 사용한다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>job:on-schedule:
+  only:
+    - schedules
+  script:
+    - make world
+
+job:
+  except:
+    - schedules
+  script:
+    - make build
+</code></pre></div></div>
 
         
       </section>
@@ -442,7 +480,7 @@
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-06T00:00:00+09:00">November 6, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-07T00:00:00+09:00">November 7, 2022</time></p>
 
       </footer>
 
@@ -451,23 +489,22 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=MLflow%20http%3A%2F%2Flocalhost%3A4000%2Fmlops%2Fmlflow%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=GitLab%20http%3A%2F%2Flocalhost%3A4000%2Fmlops%2Fgitlab%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmlops%2Fmlflow%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmlops%2Fgitlab%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmlops%2Fmlflow%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmlops%2Fgitlab%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/mlops/mlops/" class="pagination--pager" title="MLOps
+      <a href="/mlops/mlflow/" class="pagination--pager" title="MLflow
 ">이전</a>
     
     
-      <a href="/mlops/gitlab/" class="pagination--pager" title="GitLab
-">다음</a>
+      <a href="#" class="pagination--pager disabled">다음</a>
     
   </nav>
 
@@ -491,7 +528,7 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/mlops/gitlab/" rel="permalink">GitLab
+        <a href="/mlops/mlflow/" rel="permalink">MLflow
 </a>
       
     </h2>
@@ -516,7 +553,7 @@
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">Gitlab
+    <p class="archive__item-excerpt" itemprop="description">MLflow
 </p>
   </article>
 </div>
