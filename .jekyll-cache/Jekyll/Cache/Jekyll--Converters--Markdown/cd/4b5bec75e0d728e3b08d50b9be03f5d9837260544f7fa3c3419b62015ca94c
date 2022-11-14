@@ -1,0 +1,148 @@
+I"�"<h1 id="정적-페이지와-동적-페이지">정적 페이지와 동적 페이지</h1>
+
+<p><img width="706" alt="image" src="https://user-images.githubusercontent.com/63439911/201676532-8e2a761f-1124-44ce-97d7-7098470c8fc3.png" /></p>
+
+<p>웹페이지는 위의 이미지처럼 웹 주소 url을 가지고 통신 규칙 http에 맞게 요청하면 알맞은 내용 html을 응답받는다. 하지만 이처럼 단순한 클라이언트와 웹 서버로는 정적인 페이지밖에 처리하지 못하는 한계가 있다.</p>
+
+<p>이러한 html의 한계를 극복하기 위해 application을 활용한 것이 Web Application이다.</p>
+
+<p>더 나아가서 보안강화와 장애 극복을 가능하게 하는 것을 Web Application Server 줄여서 WAS라고 부른다.</p>
+
+<h2 id="static-page">Static Page</h2>
+
+<p>Web Server는 파일 경로와 이름을 받아서 일치하는 file contents를 반환한다.</p>
+
+<p>항상 동일한 페이지를 반환한다.</p>
+
+<p>html, css, image 파일과 같이 컴퓨터에 저장되어 있는 파일들을 반환해준다.</p>
+
+<p><img width="706" alt="image" src="https://user-images.githubusercontent.com/63439911/201676643-3b1df4b6-c80a-4c9f-8549-226e02304b63.png" /></p>
+
+<h2 id="dynamic-pages">Dynamic Pages</h2>
+
+<p>동적 페이지는 동적인 Contents들을 반환한다.</p>
+
+<p>웹 서버에 의해서 실행되는 프로그램을 통해 만들어진 결과물이다.</p>
+
+<p><img width="705" alt="image" src="https://user-images.githubusercontent.com/63439911/201676746-b65261ee-e3e3-4ed0-aa19-75fb549cea37.png" /></p>
+
+<h1 id="web-server-vs-was">Web Server vs WAS</h1>
+
+<h2 id="web-server">Web Server</h2>
+
+<p>웹 서버는 클라이언트로부터 HTTP요청을 받아 HTML 문서나 각종 리소스를 전달하는 컴퓨터이다.</p>
+
+<p><img width="552" alt="image" src="https://user-images.githubusercontent.com/63439911/201676855-1ee10f2c-30c6-42c6-8a68-de906dd73872.png" /></p>
+
+<p>아래의 두 가지 기능 중 요청에 따라 적절하게 선택하여 수행한다.</p>
+
+<ul>
+  <li>기능 1
+    <ul>
+      <li>정적인 컨텐츠를 제공한다.</li>
+      <li>WAS를 거치지 않고 바로 자원을 제공한다.</li>
+    </ul>
+  </li>
+  <li>기능 2
+    <ul>
+      <li>동적인 컨텐츠 제공을 위한 요청을 전달한다.</li>
+      <li>클라이언트의 요청을 WAS에 보내고 WAS가 처리한 결과를 클라이언트에 전달한다.</li>
+      <li>클라이언트는 일반적으로 웹 브라우저이다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>웹 서버에는 Apache Server와 Nginx가 있는데 각각의 특성은 다음과 같다.</p>
+
+<ul>
+  <li>Apache Server : Linux 뿐 아니라 Windows 환경에서도 운용 가능</li>
+  <li>Nginx : 가벼움과 높은 성능을 목표로 하고 웹 서버, 프록시 기능을 가짐</li>
+</ul>
+
+<h2 id="was">WAS</h2>
+
+<p>WAS는 웹 어플리케이션과 서버 환경을 만들어 동작시키는 기능을 제공하는 소프트웨어 미들웨어 프레임워크이다.</p>
+
+<p><img width="705" alt="image" src="https://user-images.githubusercontent.com/63439911/201676961-7689ebec-9c17-4fa9-bc63-4cce5037eb9f.png" /></p>
+
+<p>WAS는 Web Server와 Web Container(JSP, Servlet)으로 이루어져 있다.</p>
+
+<p>Web Server와는 다르게 Web Container를 갖는다는 점이 특징이며 HTML같은 정적인 페이지에서 처리를 할 수 없는 DB 조회, 비즈니스 로직 같은 동적 컨텐츠를 제공한다.</p>
+
+<p>현업에서 하는 프로젝트를 보면 WAS와 Web Server를 분리하는데 그렇게 하여 얻을 수 있는 장점은 다음과 같다.</p>
+
+<p><img width="656" alt="image" src="https://user-images.githubusercontent.com/63439911/201677079-f53d4149-65c0-465e-be4c-36735f36cded.png" /></p>
+
+<ol>
+  <li>기능을 분리하여 서버의 부하를 방지할 수 있다.
+    <ul>
+      <li>WAS는 페이지를 만들기 위한 다양한 로직을 처리하는데 단순히 정적인 컨텐츠를 WAS에서 제공하면 리소스 낭비가 되어 작업이 지연될 수 있다.</li>
+    </ul>
+  </li>
+  <li>보안 강화
+    <ul>
+      <li>SSL에 암호화 처리에 Web Server를 사용한다.</li>
+      <li>Web Server를 앞단에 두어서 중요한 정보가 담긴 DB나 로직까지 전파되지 못하게 한다.</li>
+    </ul>
+  </li>
+  <li>여러 대의 WAS를 연결이 가능하다.
+    <ul>
+      <li>Load Balancing 이 가능하게 된다.</li>
+      <li>
+        <p>장애극복이 가능하다.</p>
+
+        <p><img width="442" alt="image" src="https://user-images.githubusercontent.com/63439911/201677165-66d77758-e0af-4310-97dd-14bbf4187aca.png" /></p>
+      </li>
+    </ul>
+  </li>
+  <li>다른 종류의 WAS로 서비스가 가능하다.
+    <ul>
+      <li>하나의 서버에서 PHP App과 JAVA App을 함께 사용이 가능하다.</li>
+    </ul>
+  </li>
+</ol>
+
+<h1 id="proxy란">Proxy란?</h1>
+
+<p>보안상의 문제로 직접 통신을 주고받을 수 없는 두 PC 사이의 통신을 할 때 직접 하지 않고 중간에서 중계를 해주는 개념을 프록시라고 한다.</p>
+
+<p><img width="627" alt="image" src="https://user-images.githubusercontent.com/63439911/201677327-386042d5-c640-415a-906e-90df47d6773f.png" /></p>
+
+<p>프록시 서버는 서버가 어디에 위치하느냐에 따라서 포워드와 리버스 프록시로 나뉜다.</p>
+
+<h2 id="forward-proxy">Forward Proxy</h2>
+
+<p>클라이언트에서 서버로 리소스를 요청할 때 직접 요청하는 것이 아니라 프록시 서버를 거쳐서 요청하게 된다. 이럴 경우에는 서버에서 받는 IP는 클라이언트가 아닌 프록시 서버의 IP이기 때문에 서버는 클라이언트가 누군지 알 수 없게 된다. 결과적으로 서버에게 클라이언트가 누구인지 감추는 역할을 한다.</p>
+
+<p>Forward Proxy는 대개 캐싱 기능이 있으므로 자주 사용되는 컨텐츠라면 월등한 성능 향상을 가져올 수 있으며 정해진 사이트만 연결하게 설정하는 등 웹 사용 환경을 제한할 수 있으므로 보안이 매우 중요한 기업 환경 등에서 많이 사용한다.</p>
+
+<p><img width="705" alt="image" src="https://user-images.githubusercontent.com/63439911/201677452-6dd4a4e9-9669-45a4-8ab1-ac15d90303c7.png" /></p>
+
+<ul>
+  <li>클라이언트가 서버에게 요청할 때 직접 서버에 접근하는것이 아니고 포워드 프록시 서버에 요청을 하면 포워드 프록시 서버가 해당 서버에 접근하여 요청을 전달하고 결과를 클라이언트에 전달해주는 방식</li>
+  <li>포워드 프록시는 캐시 기능을 사용하기 때문에 캐시 서버로 활용하여 성능 향상을 시킬 수 있다.</li>
+  <li>자주 사용되는 자원을 캐시에 저장해놓기 때문에 해당 자원 요청이 온다면 서버에게 갈 필요 없이 프록시 서버 자체에서 처리가 가능하다.</li>
+  <li>클라이언트가 서버를 직접 접근하지 못하기 때문에 보안성이 향상된다.</li>
+</ul>
+
+<h2 id="reverse-proxy">Reverse Proxy</h2>
+
+<p>리버스 프록시는 포워드 프록시와 반대되는 개념이다. 애플리케이션 서버의 앞에 위치하며 클라이언트가 서버를 요청할 때 리버스 프록시를 호출하고 리버스 프록시가 서버로부터 응답을 전달받아 다시 클라이언트에게 전송하는 역할을 한다.</p>
+
+<p>이 때 클라이언트는 애플리케이션 서버를 직접 호출하는것이 아니라 서버를 통해 호출하기 때문에 리버스 프록시는 애플리케이션 서버를 감추는 역할을 하게 된다.</p>
+
+<p><img width="703" alt="image" src="https://user-images.githubusercontent.com/63439911/201677536-8c488bf7-2d2d-4990-9c0f-ee9f5cf5b710.png" /></p>
+
+<ul>
+  <li>클라이언트가 서버에게 요청할 때 직접 서버에 접근하는 것이 아니라 리버스 프록시 서버가 이 요청들을 받아서 내부 서비스에 접근하여 요청을 전달하고 결과를 클라이언트에게 전달해주는 방식</li>
+  <li>클라이언트는 내부 서버를 접근하지 못하기 때문에 보안과 성능을 샹상할 수 있다.</li>
+  <li>여러 내부 서버를 둘 수 있어서 로드 밸런싱이나 트래픽 분산이 가능하다.</li>
+  <li>포워드 프록시와는 반대로 내부 서버는 클라이언트를 알지만 클라이언트는 프록시를 통해 내부 서버를 접근하기 때문에 내부 서버를 알 지 못한다.</li>
+</ul>
+
+<h1 id="nginx">Nginx</h1>
+
+<p>Nginx란 WAS를 도와주는 비동기 이벤트 기반구조의 경량화 웹 서버 프로그램이다.</p>
+
+<p>클라이언트로부터 요청을 받았을 때 요청에 맞는 정적 파일을 응답해주는 HTTP Web Server로 활용되기도 하고 또는 Reverse Proxy Server로 활용하여 WAS의 부하를 줄일 수 있는 로드밸런서 역할을 하기도 한다.</p>
+:ET
