@@ -147,3 +147,65 @@ web container 2개 복제해서 띄어놓겠다고 정의하여 pod를 생성하
 - 용도 : 대규모 기업용 환경에도 활용 가능한 다목적 쿠버네티스 관리 플랫폼
 - 장점 : 기능이 많고 추가 도구 설치 용이, 멀티 클라우드 관리 가능
 - 단점 : 다른 도구에 비해 무겁다.
+
+## K8s vs Rancher
+
+- K8s
+    
+    K8s는 컨테이너 오케스트레이션의 중심역할을한다. 
+    
+    여러 퍼블릭 클라우드 공급자 및 하이브리드 클라우드 환경에서 컨테이너화된 워크로드를 효율적으로 실행할 수 있는 유연성을 팀에게 제공한다.
+    
+    K8s는 더 발전된 스케쥴링과 scaling 기능을 제공하여 application 성능과 고가용성을 보장한다.
+    
+    그러나 해당 기능은 클러스터 내의 자원 관리에 중점을 둔다.
+    
+    - 특징
+        - 클라우드 공급자에 구애받지 않음
+            - K8s는 오픈소스이고 플랫폼에 구애받지 않고 workload가 중앙화되어있고 public cloud 플랫폼 간의 k8s의 핵심 기능이 유사하기 때문에 cloud 제공자들간 이식이 자유롭다.
+        - 손쉬운 application 확장 가능
+            - K8s는 각각 cluster 자동 확장기와 pod 자동확장기를 사용하여 리소스 및 서비스 확장 프로세스를 자동화한다. (autoscaling)
+            - autoscaling은 관리자와 응용 프로그램 개발자가 으용 프로그램을 수평 또는 수직적으로 확장하여 급증하는 트래픽에 대응이 가능하게 해준다.
+            - 트래픽이 적은 기간에는 자동적으로 축소되어 비용을 절감할 수 있다.
+        - 자원 사용 최적화
+            - 관리자는 node의 위치, 하드웨어 성능 또는 이미 동일한 node에서 hosting 되는 다른 pod에 대한 반선호도를 사용하여 pod를 예약할 수 있다.
+            - 이러한 고급 스케쥴링 기술을 통해 hosting platform 활용을 효율적이고 비용 효율적으로 만들 수 있다.
+        - 복원
+            - pod 및 node 장애에 대한 복원력이 뛰어나도록 설계되었을 뿐 아니라 서로 다른 public cloud 가용 영역 또는 물리적 데이터 센터에 있는 VM pod를 예약하여 배포를 지원한다.
+        - 일관성 있는 환경 유지
+            - K8s는 application 배포의 여러 단계 동안 환경이 일관되도록 보장한다.
+            - 또한 온프레미스에 있는 클라우드 공급자와 서버 간에 일관성을 보장한다.
+- Rancher
+    
+    Rancher는 K8s가 단일 클러스터 내의 자원 관리에 중점을 두는것과는 다르게 여러 K8s 클러스터를 관리하도록 설계된 플랫폼이다.
+    
+    Rancher는 Prometheus를 활용하여 cluster provisioning, centralizaed security 관리 및 workload 모니터링과 같은 작업들을 단순화한다.
+    
+    또한 Kubecost, Prometheus, Grafana 및 MySQL과 같은 다양한 어플리케이션을 위한 광범위한 Helm Chart application catalog를 제공한다.
+    
+    - 특징
+        - cluster provisioning & import
+            - Rancher를 사용하면 단일 콘솔을 사용하여 선호하는 클라우드 공급자에 K8s 클러스터를 provisioning할 수 있다.
+            - Rancher를 사용하면 GCP, AWS, Azure 콘솔 간에 전환할 필요가 없다.
+            - 기존 클러스터가 있고 이를 관리하기 위해 Rancher를 사용하는 경우 Cluster Import라는 옵션을 제공하고 Rancher가 관리를 인계하는 데 도움이 되는 기존 클러스터 노드에 에이전트를 배포한다.
+        - 프로젝트의 개념
+            - Namespace는 일반적으로 독립적인 관리 제어가 필요한 별도의 팀에 할당된 클러스터 리소스 그룹이다. Rancher는 Project라고 하는 기존 K8s namespace위에 구성을 제공하고 Project는 namespace를 함께 그룹화하여 단일 제어 지점을 제공한다.
+            - 클러스터 관리자는 namespace로 가는 프로젝트에 role based access control 이라고하는 RBAC를 적용할 수 있다. 이를 통해 모든 namespace 내에서 사용자를 관리할 필요가 없다.
+            - Rancher는 또한 특정 project의 리소스 사용량에 대해 시각화하고 유용한 운영 지표를 제공한다.
+        - 확장된 RBAC 제어
+            - 대부분의 팀은 production에서 둘 이상의 K8s 클러스터를 실행한다. 이러한 workload 분산은 단일 application이 각각 다른 public 및 private cloud에서 호스팅될 수 있는 여러 cluster에 걸쳐 있을 수 있다는 것을 의미한다.
+            - Rancher는 K8s 클러스터 전체에서 프로젝트 수준 RBAC 제어를 확장한다.
+            - 단일 사용자는 클러스터 간에 전환하기 위해 다른 인증 키 없이 여러 K8s 클러스터에서 동일하거나 다른 권한을 갖도록 정의할 수 있다.
+        - 손쉬운 workload 배포
+            - 복잡한 배포 Manifest를 생성하지 않고 Rancher UI를 사용하여 Cluster에 workload를 배포할 수 있따.
+            - YAML template를 사용하여 구성하는 모든 옵션은 UI에서 사용할 수 있다.
+        - 모니터링과 alert
+            - 모니터링 및 Alert는 Prometheus 및 Alertmanager와 같이 인기 있고 검증된 도구 위에서 구축된다.
+            - 구성원을 쉽게 추가할 수 있는 RBAC 제어가 포함된 대시보드를 제공한다.
+        - 광범위한 application catalog
+            - Helm Chart를 사용하여 클러스터에서 인기 있는 Application의 배포를 단순화하는 광범위한 catalog가 있다. 스마트폰의 앱 스토어와 유사하다.
+            - 수동으로 manifest 파일을 update하는 것과 같이 기존 방법을 사용하여 K8s에 배포하는 것 대신 Rancher를 사용하면 여러 클러스터에 Application을 쉽게 배포할 수 있다.
+            - K8s 및 Rancher는 컨테이너를 오케스트레이션하고 여러 K8s 클러스터에서 효율적으로 수행하는 데 필요한 모든 기능을 제공한다. 그러나 이러한 대규모 환경에 내재된 비용 관리 문제는 해결하지 못한다. Rancher는 Kubecost와 호환되어 다중 클러스터 비용 할당 문제에 대한 자동화된 솔루션을 제공한다.
+        - K8s를 위한 비용 관리
+            - Helm chart의 Rancher application catalog에서 간단하게 Kubecost를 배포할 수 있다.
+            - Kubecost는 단일 Rancher 프로젝트에서 여러 namespace에 걸쳐 application을 그룹화 할 때 Rancher 프로젝트에 대한 비용을 할당하는 데 도움을 줄 수 있다. 또한 Pod label의 도움으로 Kubecost는 K8s 리소스에서 사용하는 public cloud의 데이터베이스 서비스와 같은 외부 리소스 비용도 고려한다.
