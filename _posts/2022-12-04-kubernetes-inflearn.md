@@ -128,3 +128,106 @@ ClusterIP 서비스의 설정은 다음과 같다.
 ![image](https://user-images.githubusercontent.com/63439911/205489091-b69a8aac-5485-4d4f-b96c-70f4c23ff232.png)
 
 자동으로 살아 있는 노드에 접근하기위해 모든 노드를 보고 있는 `Load Balancer` 가 필요하다. 브라우저는 NodePort에 직접 요청을 보내는 것이 아니라 Load Balancer에 요청하고 Load Balancer가 알아서 살아있는 Node에 접근하는식으로 NodePort의 단점을 없앨 수 있다.
+
+# Ingress
+
+하나의 클러스터에서 여러 서비스를 운영할 때 NodePort를 사용하면 서비스 개수만큼 포트를 열어야한다. 
+
+예를 들면 아래와 같은 서비스를 구축할 수 있을 것이다.
+
+<img width="698" alt="image" src="https://user-images.githubusercontent.com/63439911/205658886-cf1c0713-d225-4bef-bc84-5b9e921224fb.png">
+
+
+`example.com` , `subicura.com/blog` , `subicura.com/help` 주소로 서로 다른 서비스에 접근하는 모습이다. 하나의 포트로 여러 개의 서비스를 연결할 때에는 Ingress를 사용한다.
+
+## Ingress 생성 흐름
+<img width="702" alt="image" src="https://user-images.githubusercontent.com/63439911/205659874-88d56429-1b56-43fa-821f-235f799d78d8.png">
+
+1. `Ingress Controller`는 `Ingress` 변화를 체크
+2. `Ingress Controller`는 변경된 내용을 `Nginx`에 설정하고 프로세스를 재시작한다.
+
+Ingress가 하는일을 보면 단순히 YAML로 만든 Ingress 설정을 단순히 nginx 설정으로 바꾸기만 한다. 
+
+Ingress를 사용하면 YAML 설정만으로 도메인, 경로 설정을 손쉽게 할 수 있다.
+
+# Volume
+
+쿠버네티스는 Volume을 이용하여 컨테이너의 디렉토리를 외부 저장소와 연결하고 다양한 플로그인을 지원하여 대부분의 스토리지를 별도 설정없이 사용할 수 있다.
+
+- PV/PVC
+    
+    데이터 저장이 필요한 경우 흔히 Persistent Volume(PV), Persistent Volume Claim(PVC)를 사용한다.
+    
+
+Pod 안에 속한 컨테이너 간 디렉토리를 공유하는 방법은 보통 사이드카라는 패턴에서 사용한다.
+
+<img width="527" alt="image" src="https://user-images.githubusercontent.com/63439911/205660006-41035c2d-3053-43ed-9ff2-e06ad128016b.png">
+
+`app` 컨테이너는 `/var/log/example.log` 에 로그 파일을 만들고 `sidecar` 컨테이너는 해당 로그 파일을 처리하도록 한다.
+
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar
+spec:
+  containers:
+    - name: app
+      image: busybox
+      args:
+        - /bin/sh
+        - -c
+        - >
+          while true;
+          do
+            echo "$(date)\n" >> /var/log/example.log;
+            sleep 1;
+          done
+      volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+    - name: sidecar
+      image: busybox
+      args: [/bin/sh, -c, "tail -f /var/log/example.log"]
+      volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+  volumes:
+    - name: varlog
+      emptyDir: {}
+```
+
+## hostpath
+
+호스트 디렉토리를 컨테이너 디렉토리에 다음과 같은 그림의 형식으로 연결해볼 수 있다.
+
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/63439911/205660168-edbefdf3-5e76-437f-95ab-3030cd23c297.png">
+
+호스트의 `/var/log` 를 컨테이너의 `/host/var/log` 디렉토리로 마운트한다.
+
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: host-log
+spec:
+  containers:
+    - name: log
+      image: busybox
+      args: ["/bin/sh", "-c", "sleep infinity"]
+      volumeMounts:
+        - name: varlog
+          mountPath: /host/var/log
+  volumes:
+    - name: varlog
+      hostPath:
+        path: /var/log
+```
+
+# ConfigMap
+
+컨테이너에서 설정 파일을 관리하는 방법은 이미지를 빌드할 때 복사하거나, 컨테이너를 실행할 때 외부 파일을 연결하는 방법이 있다. 쿠버네티스는 이를 `ConfigMap`으로 관리한다.
+
+# Secret
+
+쿠버네티스는 `ConfigMap`과 유사하지만, 보안 정보를 관리하기 위해 `Secret`을 별도로 제공한다. ConfigMap과 차이점은 데이터가 `base64`로 저장된다는 점이다.
